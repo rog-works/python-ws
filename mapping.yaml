@@ -1,0 +1,28 @@
+/path/to.workspace:
+  schema:
+    type: "object"
+    properties:
+      id: "integer"
+      code: "integer"
+      message:
+        type:
+          - "string"
+          -
+            type: "object"
+            properties:
+              type: "intger"
+              v: "integer"
+              valts: "integer"
+              val: "integer"
+  to:
+    id: "id"
+    code: "code"
+    message: "return message if type(message) is str else ''"
+    data: |
+      if type(message) is str:
+        return {}
+      else:
+        values = []
+        for key, value in message.items():
+          values.append({"name": key, "id": value})
+        return values
