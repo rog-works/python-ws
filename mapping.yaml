@@ -10,17 +10,19 @@
         type: "object"
         properties:
           type: "object"
-          additionalProperties:
-            type: "object"
-            properties:
-              type:
-                type: "integer"
-              v:
-                type: "integer"
-              valts:
-                type: "integer"
-              val:
-                type: "integer"
+          additionalProperties: false
+          patternProperties:
+            '^.+$':
+              type: "object"
+              properties:
+                type:
+                  type: "integer"
+                v:
+                  type: "integer"
+                valts:
+                  type: "integer"
+                val:
+                  type: "integer"
   to:
     id: "id"
     code: "code"
