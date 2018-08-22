@@ -14,12 +14,14 @@ context = {"id": 1, "code": 2, "message": {"1":1,"2":2,"3":3}}
 # evaluate convert script
 result = {}
 for key, value in data['/path/to.workspace']['to'].items():
-	source = value
-	if re.match(r"^[\w\[\]\']+$", source):
-		source = '_ret = {}'.format(source)
-	elif re.search(r'(\s*)return\s+(.+)', source, flags=re.MULTILINE):
-		source = re.sub(r'(\s*)return\s+(.+)', r'\1_ret = \2', source, flags=re.MULTILINE)
-	exec(source, {}, context)
+	script = value
+	if re.match(r"^[\w\[\]\']+$", script):
+		script = '_ret = {}'.format(script)
+	elif re.search(r'(\s*)return\s+(.+)', script, flags=re.MULTILINE):
+		script = re.sub(r'(\s*)return\s+(.+)', r'\1_ret = \2', script, flags=re.MULTILINE)
+	else:
+		script = "_ret = '{}'".format(script)
+	exec(script, {}, context)
 	result[key] = context['_ret']
 
 # show result
