@@ -1,15 +1,59 @@
 # -*- coding: utf-8 -*-
 
 import yaml
+import json
 import re
+from jsonschema import validate
 
 # load mapping data
 f = open('mapping.yaml', 'r')
 data = yaml.load(f)
 f.close()
 
+print(json.dumps(data['/path/to.workspace']['schema']))
+
 # create context
-context = {"id": 1, "code": 2, "message": {"1":1,"2":2,"3":3}}
+context = {
+  "id": 1,
+  "code": 2,
+  "message": {
+    "hoge": {
+      "type": 1,
+      "v": 2,
+      "val": 3,
+      "valts": 4
+    }
+  }
+}
+
+schema = {
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "code": {"type": "integer"},
+    "message": {
+      "type": "object",
+      "properties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "type": {"type": "integer"},
+            "v": {"type": "integer"},
+            "valts": {"type": "integer"},
+            "val": {"type": "integer"}
+          }
+        }
+      }
+    }
+  }
+}
+
+print(json.dumps(schema))
+
+# validate json schema
+#validate({"id":1}, data['/path/to.workspace']['schema'])
+validate(context, schema)
 
 # evaluate convert script
 result = {}

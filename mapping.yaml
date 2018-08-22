@@ -2,18 +2,25 @@
   schema:
     type: "object"
     properties:
-      id: "integer"
-      code: "integer"
+      id:
+        type: "integer"
+      code:
+        type: "integer"
       message:
-        type:
-          - "string"
-          -
+        type: "object"
+        properties:
+          type: "object"
+          additionalProperties:
             type: "object"
             properties:
-              type: "intger"
-              v: "integer"
-              valts: "integer"
-              val: "integer"
+              type:
+                type: "integer"
+              v:
+                type: "integer"
+              valts:
+                type: "integer"
+              val:
+                type: "integer"
   to:
     id: "id"
     code: "code"
@@ -24,5 +31,5 @@
       else:
         values = []
         for key, value in message.items():
-          values.append({"name": key, "id": value})
+          values.append({"key": key, "value": value})
         return values
