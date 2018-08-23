@@ -1,5 +1,5 @@
-/path/to.workspace:
-  schema:
+schema:
+  from:
     type: "object"
     properties:
       id:
@@ -15,13 +15,40 @@
             properties:
               type:
                 type: "integer"
-              v:
+                -v:
                 type: "integer"
               valts:
                 type: "integer"
               val:
                 type: "integer"
   to:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      code:
+        type: "integer"
+      message:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            key:
+              type: "string"
+            value:
+              type: "object"
+              properties:
+                type:
+                  type: "integer"
+                v:
+                  type: "integer"
+                valts:
+                  type: "integer"
+                val:
+                  type: "integer"
+  mapping:
     id: "id"
     code: "code"
     message: "return message if type(message) is str else ''"
