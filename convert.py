@@ -10,8 +10,6 @@ f = open('mapping.yaml', 'r')
 data = yaml.load(f)
 f.close()
 
-print(json.dumps(data['/path/to.workspace']['schema']))
-
 # create context
 context = {
   "id": 1,
@@ -26,34 +24,8 @@ context = {
   }
 }
 
-schema = {
-  "type": "object",
-  "properties": {
-    "id": {"type": "integer"},
-    "code": {"type": "integer"},
-    "message": {
-      "type": "object",
-      "properties": {
-        "type": "object",
-        "additionalProperties": {
-          "type": "object",
-          "properties": {
-            "type": {"type": "integer"},
-            "v": {"type": "integer"},
-            "valts": {"type": "integer"},
-            "val": {"type": "integer"}
-          }
-        }
-      }
-    }
-  }
-}
-
-print(json.dumps(schema))
-
-# validate json schema
-#validate({"id":1}, data['/path/to.workspace']['schema'])
-validate(context, schema)
+# validate from json schema
+validate(context, data['/path/to.workspace']['schema'])
 
 # evaluate convert script
 result = {}
