@@ -48,15 +48,4 @@ schema:
                   type: "integer"
                 val:
                   type: "integer"
-  mapping:
-    id: "id"
-    code: "code"
-    message: "return message if type(message) is str else ''"
-    data: |
-      if type(message) is str:
-        return {}
-      else:
-        values = []
-        for key, value in message.items():
-          values.append({"key": key, "value": value})
-        return values
+
