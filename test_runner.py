@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from application import Application
+from app.awslambda import AwsLambda as App
 
-def test_application():
-	Application().run({
+def test_app():
+	App().run({
 		'url': '/api/GetDevice',
 		'headers': {
 			'Authorization': 'access_key'
@@ -17,4 +17,4 @@ def test_application():
 	})
 
 if __name__ == '__main__':
-	test_application()
+	test_app()

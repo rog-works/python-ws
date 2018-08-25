@@ -6,12 +6,12 @@ from app.controllers.controller import Controller
 
 class GetDevice(Controller):
 	def before(self):
-		print('invoked #before')
+		print(f'invoked #before via = {self.action.name}')
 
-	def after(self, res: Response) -> Response:
+	def after(self, response: Response) -> Response:
 		print('invoked #after')
-		return self.json({'scceed': True})
+		return response
 
 	def show(self) -> Response:
 		print('invoked #show')
-		return {}
+		return self.json({'scceed': True})

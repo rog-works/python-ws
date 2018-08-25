@@ -15,3 +15,6 @@ class Response:
 	@data.setter
 	def data(self, value):
 		self._data = value
+
+	def to_hash(self) -> dict:
+		return self._data

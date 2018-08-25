@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from application import Application
+from app.awslambda import AwsLambda as App
 
 def lambda_function(event, context):
-	return Application().run(event)
+	return App().run(event)

@@ -42,7 +42,7 @@ class Mapper:
         return data
 
     def __load_mapper(self, api: str):
-        module_name = 'mappings.{}'.format(api)
+        module_name = f'mappings.{api}'
         return imm.SourceFileLoader(module_name, path).load_module()
 
     def __validate(self, data: dict, schema: dict):

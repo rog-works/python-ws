@@ -5,6 +5,10 @@ class Action:
 		self._obj = obj
 		self._handler = handler
 
+	@property
+	def name(self) -> str:
+		return self._handler.__name__
+
 	def __before(self):
 		if hasattr(self._obj, 'before'):
 			self._obj.before()

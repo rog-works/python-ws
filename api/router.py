@@ -14,7 +14,7 @@ class Router:
 
 	def __load(self, path: str) -> dict:
 		if not os.path.exists(path):
-			raise RuntimeError('Not found route configuretion. path = "{}"'.format(path))
+			raise RuntimeError(f'Not found route configuretion. path = "{path}"')
 
 		f = open(path)
 		data = yaml.load(f)
@@ -23,11 +23,11 @@ class Router:
 
 	def __resolveDeffinition(self, route: str) -> tuple:
 		if not route in self._routes:
-			raise RuntimeError('Undefined route. route = "{}"'.format(route))
+			raise RuntimeError(f'Undefined route. route = "{route}"')
 
 		deffinition = self._routes[route]
 		if not re.match(r'^[\w.]+#[\w]+\.[\w]+$', deffinition):
-			raise RuntimeError('Unexpected route deffinition. deffinition = "{}"'.format(deffinition))
+			raise RuntimeError(f'Unexpected route deffinition. deffinition = "{deffinition}"')
 
 		module, handler = deffinition.split('#')
 		klass, method = handler.split('.')
@@ -40,7 +40,7 @@ class Router:
 			handler = getattr(obj, method)
 			return obj, handler
 		except Exception as e:
-			raise RuntimeError('Undefined handler. hander = {}.{}, error = {}'.format(klass, method, e.message))
+			raise RuntimeError(f'Undefined handler. hander = {klass}.{method}, error = {e}')
 
 	def dispatch(self, route: str) -> tuple:
 		deffinition = self.__resolveDeffinition(route)
