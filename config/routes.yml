@@ -1,1 +1,1 @@
-api/method: app.controllers.api.method
+api/method: app.controllers.api.method#Method.show
