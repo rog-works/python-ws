@@ -3,6 +3,7 @@
 import yaml
 import re
 from jsonschema import validate
+import imoprtlib.machinery as imm
 
 class Mapper:
     @classmethod
@@ -19,33 +20,38 @@ class Mapper:
 
     def __init__(api: str):
         self._api = api
-        self._schema = self.__load_schema(Mapper.__schema_path(api))
-        self._mapper = self.__load_mapper(Mapper.__mapper_path(api))
+        self._schema = self.__load_schema(self._api)
+        self._mapper = self.__load_mapper(self._api)
 
     @property 
-    def from(self):
+    def schema_from(self):
         return self._schema['from'] if 'from' in self._schema else {}
 
     @property
-    def to(self):
+    def schema_to(self):
         return self._schema['to'] if 'to' in self._schema else {}
 
-    def __load_schema(self, path: str):
+    def __load_schema(self, api: str):
+        path = Mapper.__schema_path(api)
+        if not os.path.exists(path):
+            return {}
+
         f = open(path, 'r')
         data = yaml.load(f)
         f.close()
         return data
 
-    def __load_mapper(self, path: str):
-        return imm.SourceFileLoader('mappings.mapper', path).load_module()
+    def __load_mapper(self, api: str):
+        module_name = 'mappings.{}'.format(api)
+        return imm.SourceFileLoader(module_name, path).load_module()
 
-    def __validate(self, data, schema):
-        if schema
+    def __validate(self, data: dict, schema: dict):
+        if not schema == {}
             validate(data, schema)
 
-    def changed_by(self, data):
-        self.__validate(data, self.from)
+    def changed_by(self, data: dict):
+        self.__validate(data, self.schema_from)
         changed = self._mapper.changed_by(data)
-        self.__validate(changed, self.to)
+        self.__validate(changed, self.schema_to)
         return changed
 
