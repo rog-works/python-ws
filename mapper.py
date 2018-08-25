@@ -46,7 +46,7 @@ class Mapper:
         return imm.SourceFileLoader(module_name, path).load_module()
 
     def __validate(self, data: dict, schema: dict):
-        if not schema == {}
+        if not schema == {}:
             validate(data, schema)
 
     def changed_by(self, data: dict):
