@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 
 class Action:
-	def __init__(self, klass, handler):
-		self._class = klass
+	def __init__(self, obj, handler):
+		self._obj = obj
 		self._handler = handler
 
-	def __before():
-		if getattr(self._class, 'before'):
-			self._class.before()
+	def __before(self):
+		if hasattr(self._obj, 'before'):
+			self._obj.before()
 
-	def __after(result):
-		if getattr(self._class, 'after'):
-			return self._class.after(result)
+	def __after(self, response):
+		if hasattr(self._obj, 'after'):
+			return self._obj.after(response)
 		else:
-			return result
+			return response
 
-	def execute(self, *args):
-		self.__before(*args)
-		result = self._handler(*args)
-		return self.__after(result)
+	def initialize(self, *args):
+		if hasattr(self._obj, 'initialize'):
+			self._obj.initialize(*args)
+
+	def execute(self):
+		self.__before()
+		response = self._handler()
+		return self.__after(response)

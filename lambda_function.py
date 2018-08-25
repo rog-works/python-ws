@@ -3,4 +3,4 @@
 from application import Application
 
 def lambda_function(event, context):
-	return Application(event).run()
+	return Application().run(event)

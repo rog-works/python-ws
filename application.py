@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from api.request import Builder
+from api.router import Router
+from api.request import Request, Builder
+from api.response import Response
+from api.action import Action
 
 class Application:
-	def __init__(self, event: dict):
-		self._request = self.__to_request(event)
-
-	def __to_request(self, event: dict):
+	def __build_request(self, event: dict) -> Request:
 		builder = Builder()
 		if 'url' in event:
 			builder.url(event['url'])
@@ -18,6 +18,8 @@ class Application:
 			builder.body(event['body'])
 		return builder.build()
 
-	def run(self):
-		action = Router().dispatch(self._request.url)
-		action.execute(self._request)
+	def run(self, event) -> Response:
+		request = self.__build_request(event)
+		action = Action(*Router().dispatch(request.url))
+		action.initialize(request)
+		return action.execute()
