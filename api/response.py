@@ -33,15 +33,6 @@ class Response(object):
 		"""
 		return self._data
 
-	@data.setter
-	def data(self, data):
-		"""レスポンスデータ設定プロパティ
-
-		Args:
-			data: レスポンスデータ
-		"""
-		self._data = data
-
 	def to_hash(self) -> dict:
 		"""レスポンスデータを連想配列に変換
 
