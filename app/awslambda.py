@@ -9,6 +9,9 @@ from errors.error import Error
 class AwsLambda(object):
 	"""AWS Lambda用アプリケーション"""
 
+	def __init__(self, config: Config):
+		self._config = config
+
 	def __build_request(self, event: dict) -> Request:
 		"""イベントデータからリクエストを生成
 
@@ -39,10 +42,10 @@ class AwsLambda(object):
 			レスポンスの連想配列
 		"""
 		try:
-			config = Config('config/app-dev.yml')
 			request = self.__build_request(event)
-			action = Action(*Router().dispatch(request.url))
-			action.initialize(config, action, request)
+			router = Router(self._config.get('routes.path'))
+			action = Action(*router.dispatch(request.url))
+			action.initialize(self._config, action, request)
 			return action.execute().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')

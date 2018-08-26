@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
 class TestRouter(object):
-	def handle():
+	def handle(self):
 		pass

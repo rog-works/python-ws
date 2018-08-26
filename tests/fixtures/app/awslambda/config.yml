@@ -1,0 +1,2 @@
+routes:
+  path: tests/fixtures/app/awslambda/routes.yml
