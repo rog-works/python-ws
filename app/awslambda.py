@@ -2,8 +2,8 @@
 
 from api.router import Router
 from api.request import Request, Builder
-from api.response import Response
 from api.action import Action
+from errors.error import Error
 
 class AwsLambda(object):
 	"""AWS Lambda用アプリケーション"""
@@ -37,7 +37,10 @@ class AwsLambda(object):
 		Returns:
 			レスポンスの連想配列
 		"""
-		request = self.__build_request(event)
-		action = Action(*Router().dispatch(request.url))
-		action.initialize(action, request)
-		return action.execute().to_hash()
+		try:
+			request = self.__build_request(event)
+			action = Action(*Router().dispatch(request.url))
+			action.initialize(action, request)
+			return action.execute().to_dict()
+		except Error as e:
+			raise Exception(f'{e.code}: message = {e.message}')

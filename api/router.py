@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import yaml
 import importlib
 import re
+import yaml
+from errors.error import NotFoundError, IndexOutOfBoundError, DataFormatError
 
 class Router(object):
 	"""ルーティング定義の管理と、ハンドラーの導出
@@ -32,9 +33,12 @@ class Router(object):
 
 		Returns:
 			ルーティング定義の連想配列
+
+		Raises:
+			NotFoundError: ルーティング定義ファイルが存在しない
 		"""
 		if not os.path.exists(path):
-			raise RuntimeError(f'Not found route configuretion. path = "{path}"')
+			raise NotFoundError(f'Not found route configuretion. path = "{path}"')
 
 		f = open(path)
 		data = yaml.load(f)
@@ -42,27 +46,31 @@ class Router(object):
 		return data
 
 	def __resolveDeffinition(self, route: str) -> tuple:
-		"""ルートに対応するハンドラーモジュール定義を取得
+		"""ルートに対応するハンドラー定義を取得
 
 		Args:
 			route: ルート
 
 		Returns:
-			ハンドラーモジュール定義のタプル
+			ハンドラー定義のタプル
+
+		Raises:
+			IndexOutBoundError: 定義に存在しないルート
+			DataFormatError: ハンドラー定義が不正
 		"""
 		if not route in self._routes:
-			raise RuntimeError(f'Undefined route. route = "{route}"')
+			raise IndexOutOfBoundError(f'Undefined route. route = "{route}"')
 
 		deffinition = self._routes[route]
 		if not re.match(r'^[\w.]+#[\w]+\.[\w]+$', deffinition):
-			raise RuntimeError(f'Unexpected route deffinition. deffinition = "{deffinition}"')
+			raise DataFormatError(f'Unexpected route deffinition. deffinition = "{deffinition}"')
 
 		module, handler = deffinition.split('#')
 		klass, method = handler.split('.')
 		return module, klass, method
 
 	def __resolveHander(self, module: str, klass: str, method: str) -> tuple:
-		"""指定のハンドラーモジュール定義からオブジェクトとハンドラーを取得
+		"""指定のハンドラー定義からオブジェクトとハンドラーを取得
 
 		Args:
 			module: モジュールパス
@@ -71,6 +79,9 @@ class Router(object):
 
 		Returns:
 			オブジェクトとハンドラーのタプル
+		
+		Raises:
+			NotFoundError: ハンドラーが存在しない
 		"""
 		try:
 			mod = importlib.import_module(module)
@@ -78,7 +89,7 @@ class Router(object):
 			handler = getattr(obj, method)
 			return obj, handler
 		except Exception as e:
-			raise RuntimeError(f'Undefined handler. hander = {klass}.{method}, error = {e}')
+			raise NotFoundError(f'Undefined handler. hander = {klass}.{method}, error = {e}')
 
 	def dispatch(self, route: str) -> tuple:
 		"""指定のルートからオブジェクトとハンドラーを取得

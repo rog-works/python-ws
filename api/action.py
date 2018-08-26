@@ -20,11 +20,7 @@ class Action(object):
 
 	@property
 	def name(self) -> str:
-		"""ハンドラーの名前を取得するプロパティ
-
-		Returns:
-			ハンドラーの名前
-		"""
+		"""ハンドラーの名前を取得するプロパティ"""
 		return self._handler.__name__
 
 	def __before(self):

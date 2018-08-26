@@ -17,23 +17,15 @@ class Response(object):
 
 	@property
 	def content_type(self) -> str:
-		"""Content-Typeを取得
-
-		Returns:
-			Content-Type
-		"""
+		"""Content-Typeを取得するプロパティ"""
 		return 'application/json'
 
 	@property
 	def data(self):
-		"""レスポンスデータ取得プロパティ
-
-		Returns:
-			レスポンスデータ
-		"""
+		"""レスポンスデータ取得プロパティ"""
 		return self._data
 
-	def to_hash(self) -> dict:
+	def to_dict(self) -> dict:
 		"""レスポンスデータを連想配列に変換
 
 		Returns

@@ -26,11 +26,7 @@ class Request(object):
 
 	@property
 	def url(self) -> str:
-		"""URLを取得するプロパティ
-
-		Returns:
-			URL
-		"""
+		"""URLを取得するプロパティ"""
 		return self._url
 
 	def has_header(self, key: str) -> bool:
@@ -75,11 +71,7 @@ class Request(object):
 
 	@property
 	def body(self) -> dict:
-		"""リクエストボディを取得するプロパティ
-
-		Returns:
-			リクエストボディ
-		"""
+		"""リクエストボディを取得するプロパティ"""
 		return self._body
 
 class Builder:

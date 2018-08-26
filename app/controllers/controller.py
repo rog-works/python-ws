@@ -29,24 +29,16 @@ class Controller(object):
 
 	@property
 	def action(self) -> Action:
-		"""アクションを取得するプロパティ
-
-		Returns:
-			アクション
-		"""
+		"""アクションを取得するプロパティ"""
 		return self._action
 
 	@property
 	def request(self) -> Request:
-		"""リクエストを取得するプロパティ
-
-		Returns:
-			リクエスト
-		"""
+		"""リクエストを取得するプロパティ"""
 		return self._request
 
-	def json(self, data: dict) -> Response:
-		"""JSONのレスポンスを生成
+	def view(self, data: dict) -> Response:
+		"""レスポンスを生成
 
 		Args:
 			data: レスポンスデータ
