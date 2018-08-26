@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from api.action import Action
-from api.request import Request
-from api.response import Response
+from router.action import Action
+from net.request import Request
+from net.response import Response
 
 class Controller(object):
 	"""コントローラーの基底クラス。コントローラー共通の処理を定義"""

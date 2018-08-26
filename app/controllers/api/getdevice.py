@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from api.response import Response
+from net.response import Response
 from app.controllers.controller import Controller
 
 class GetDevice(Controller):

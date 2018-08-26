@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from api.action import Action
+from router.action import Action
 
 #def data_provider(data_provider_func):
 #	def decorator(test_func):
