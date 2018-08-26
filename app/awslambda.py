@@ -10,6 +10,7 @@ class AwsLambda(object):
 	"""AWS Lambda用アプリケーション"""
 
 	def __init__(self, config: Config):
+		"""インスタンスを生成"""
 		self._config = config
 
 	def __build_request(self, event: dict) -> Request:
