@@ -12,5 +12,5 @@ $ pip install yaml
 ```
 $ cd /path/to/python-ws
 
-python-ws$ python -m unittest discover ./tests/*
+python-ws$ python -m unittest discover ./tests
 ```
