@@ -6,12 +6,12 @@ import yaml
 from errors.error import NotFoundError
 
 class Config(object):
-	def __init__(self, path: str = 'config/app.yml'):
+	def __init__(self, path: str):
 		"""インスタンスを生成"""
 		self._config = self.__load(self.__config_path(path))
 
 	def __config_path(self, path: str) -> str:
-		"""設定ファイルのファイルパスを取得
+		"""設定ファイルの絶対パスを取得
 
 		Args:
 			path: 設定ファイルの相対パス
@@ -41,11 +41,11 @@ class Config(object):
 		f.close()
 		return data
 
-	def get(self, key: str):
-		"""指定のキーに対応するを値を取得
+	def get(self, route: str):
+		"""指定の参照パスに対応する設定値を取得
 
 		Args:
-			key: キー
+			route: 参照パス
 
 		Returns:
 			設定値
@@ -53,11 +53,11 @@ class Config(object):
 		return self.__pluck(self._config, key.split('.'))
 
 	def __pluck(self, root, routes: list) -> str:
-		"""指定のキーに対応するを値を取得
+		"""指定の参照パスに対応する設定値を取得
 
 		Args:
-			root: 連想配列
-			routes: ルート
+			root: 参照ルート
+			routes: 参照キーリスト
 
 		Returns:
 			設定値
