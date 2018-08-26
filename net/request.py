@@ -28,7 +28,7 @@ class Request(object):
 		Returns:
 			True = 存在
 		"""
-		return key in self._header
+		return key in self._headers
 
 	def header(self, key: str, default = None):
 		"""指定のヘッダー値を取得
@@ -67,7 +67,7 @@ class Request(object):
 		"""リクエストボディを取得するプロパティ"""
 		return self._body
 
-class Builder:
+class Builder(object):
 	"""リクエストの生成情報の管理とリクエストの生成"""
 
 	def __init__(self):
@@ -84,7 +84,6 @@ class Builder:
 			url: URL
 		"""
 		self._url = url
-		return self
 
 	def headers(self, headers: dict):
 		"""ヘッダーを設定
@@ -102,7 +101,6 @@ class Builder:
 			value: 値
 		"""
 		self._headers[key] = value
-		return self
 
 	def queries(self, queries: dict):
 		"""クエリーを設定
@@ -120,7 +118,6 @@ class Builder:
 			value: 値
 		"""
 		self._queries[key] = value
-		return self
 
 	def body(self, body: dict):
 		"""リクエストボディを設定
@@ -129,7 +126,6 @@ class Builder:
 			body: リクエストボディ
 		"""
 		self._body = body
-		return self
 
 	def build(self) -> Request:
 		"""リクエストを生成
