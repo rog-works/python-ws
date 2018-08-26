@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from app.config import Config
 from router.router import Router
 from router.action import Action
 from net.request import Request, Builder
@@ -38,9 +39,10 @@ class AwsLambda(object):
 			レスポンスの連想配列
 		"""
 		try:
+			config = Config('config/app-dev.yml')
 			request = self.__build_request(event)
 			action = Action(*Router().dispatch(request.url))
-			action.initialize(action, request)
+			action.initialize(config, action, request)
 			return action.execute().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')

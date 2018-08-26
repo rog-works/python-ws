@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from app.config import Config
 from router.action import Action
 from net.request import Request
 from net.response import Response
@@ -9,16 +10,19 @@ class Controller(object):
 
 	def __init__(self):
 		"""インスタンスを生成"""
+		self._config = None
 		self._action = None
 		self._request = None
 
-	def initialize(self, action: Action, request: Request):
+	def initialize(self, config: Config, action: Action, request: Request):
 		"""インスタンスの初期化処理
 
 		Args:
+			config: コンフィグ
 			action: アクション
 			request: リクエスト
 		"""
+		self._config = config
 		self._action = action
 		self._request = request
 
