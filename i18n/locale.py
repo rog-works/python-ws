@@ -83,7 +83,7 @@ class Locale(object):
 			翻訳後の文字列
 		"""
 		if routes[0] in root:
-			return ''
+			return None
 
 		if len(routes):
 			return root[routes[0]]
