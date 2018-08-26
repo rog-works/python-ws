@@ -72,7 +72,7 @@ class Locale(object):
 
 		return trans
 
-	def __resolve(self, root: dict, routes: list) -> str:
+	def __pluck(self, root: dict, routes: list) -> str:
 		"""指定のキーに対応するを翻訳データを取得
 
 		Args:
@@ -82,10 +82,18 @@ class Locale(object):
 		Returns:
 			翻訳後の文字列
 		"""
-		if routes[0] in root:
+		key = routes[0]
+		if type(root) is list:
+			if not re.match(r'^[\d]+$', key):
+				return None
+			key = int(key)
+
+		if type(root) is list and len(root) <= key:
+			return None
+		if type(root) is dict and key not in root:
 			return None
 
-		if len(routes):
-			return root[routes[0]]
+		if len(routes) == 1:
+			return root[key]
 		else:
-			return self.__resolve(root[routes[0]], routes[1:])
+			return self.__pluck(root[key], routes[1:])

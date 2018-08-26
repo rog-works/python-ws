@@ -1,0 +1,7 @@
+hoge:
+  fuga:
+    piyo: 123
+arr:
+  - 1
+  - 2
+  - key: 'value'
