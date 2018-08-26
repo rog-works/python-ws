@@ -72,7 +72,7 @@ class Locale(object):
 
 		return trans
 
-	def __pluck(self, root: dict, routes: list) -> str:
+	def __pluck(self, root, routes: list) -> str:
 		"""指定のキーに対応するを翻訳データを取得
 
 		Args:

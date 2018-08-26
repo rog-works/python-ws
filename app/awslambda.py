@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.config import Config
+from data.config import Config
 from router.router import Router
 from router.action import Action
 from net.request import Request, Builder

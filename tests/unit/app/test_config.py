@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from app.config import Config
+from data.config import Config
 
 class TestConfig(unittest.TestCase):
 	def test_get(self):
