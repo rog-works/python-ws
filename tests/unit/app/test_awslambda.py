@@ -7,7 +7,7 @@ from app.awslambda import AwsLambda as App
 class TestAwsLambda(unittest.TestCase):
 	def test_run(self):
 		config = Config('tests/fixtures/app/awslambda/config.yml')
-		App(config).run({
+		App().run(config, {
 			'url': '/test/App',
 			'headers': {
 				'Authorization': 'auth_key'

@@ -9,10 +9,6 @@ from errors.error import Error
 class AwsLambda(object):
 	"""AWS Lambda用アプリケーション"""
 
-	def __init__(self, config: Config):
-		"""インスタンスを生成"""
-		self._config = config
-
 	def __build_request(self, event: dict) -> Request:
 		"""イベントデータからリクエストを生成
 
@@ -33,7 +29,7 @@ class AwsLambda(object):
 			builder.body(event['body'])
 		return builder.build()
 
-	def run(self, event: dict) -> dict:
+	def run(self, config: Config, event: dict) -> dict:
 		"""イベントデータから対応するハンドラーを呼び出し、レスポンスを返却
 
 		Args:
@@ -44,9 +40,9 @@ class AwsLambda(object):
 		"""
 		try:
 			request = self.__build_request(event)
-			router = Router(self._config.get('routes.path'))
+			router = Router(config.get('routes.path'))
 			action = Action(*router.dispatch(request.url))
-			action.initialize(self._config, action, request)
+			action.initialize(config, action, request)
 			return action.execute().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')
