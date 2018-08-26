@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Action(object):
-	"""ハンドラーの管理と、ハンドリングの一連の操作を実行
-
-	Attributes:
-		_obj: ハンドラーオブジェクト
-		_handler: ハンドラー
-	"""
+	"""ハンドラーの管理と、ハンドリングの一連の操作を実行"""
 
 	def __init__(self, obj, handler):
 		"""インスタンスを生成

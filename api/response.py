@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Response(object):
-	"""レスポンスデータを管理
-
-	Attributes:
-		_data: レスポンスデータ
-	"""
+	"""レスポンスデータを管理"""
 
 	def __init__(self, data):
 		"""インスタンスを生成

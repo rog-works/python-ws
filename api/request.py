@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Request(object):
-	"""リクエスト情報の管理
-
-	Attributes:
-		_url: URL
-		_headers: ヘッダー
-		_queries: クエリー
-		_body: リクエストボディ
-	"""
+	"""リクエスト情報の管理"""
 
 	def __init__(self, url: str, headers: dict, queries: dict, body: dict):
 		"""インスタンスを生成
@@ -75,14 +68,7 @@ class Request(object):
 		return self._body
 
 class Builder:
-	"""リクエストの生成情報の管理とリクエストの生成
-
-	Attributes:
-		_url: URL
-		_headers: ヘッダー
-		_queries: クエリー
-		_body: リクエストボディ
-	"""
+	"""リクエストの生成情報の管理とリクエストの生成"""
 
 	def __init__(self):
 		"""インスタンスを生成"""

@@ -7,11 +7,7 @@ import yaml
 from errors.error import NotFoundError, IndexOutOfBoundError, DataFormatError
 
 class Router(object):
-	"""ルーティング定義の管理と、ハンドラーの導出
-
-	Attributes:
-		_routes: ルーティング定義
-	"""
+	"""ルーティング定義の管理と、ハンドラーの導出"""
 
 	def __init__(self):
 		"""インスタンスを生成"""

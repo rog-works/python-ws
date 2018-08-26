@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
 
 class Error(Exception):
-	"""例外の基底クラス。エラーメッセージとエラーコードを管理
-
-	Attributes:
-		_message: エラーメッセージ
-		_code: エラーコード
-	"""
+	"""例外の基底クラス。エラーメッセージとエラーコードを管理"""
 
 	def __init__(self, message: str, code: int):
-	"""インスタンスを生成
+		"""インスタンスを生成
 
-	Args:
-		message: エラーメッセージ
-		code: エラーコード
-	"""
+		Args:
+			message: エラーメッセージ
+			code: エラーコード
+		"""
 		self._message = message
 		self._code = code
 

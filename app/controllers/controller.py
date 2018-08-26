@@ -5,12 +5,7 @@ from api.request import Request
 from api.response import Response
 
 class Controller(object):
-	"""コントローラーの基底クラス。コントローラー共通の処理を定義
-
-	Attributes:
-		_action: アクション
-		_request: リクエスト
-	"""
+	"""コントローラーの基底クラス。コントローラー共通の処理を定義"""
 
 	def __init__(self):
 		"""インスタンスを生成"""

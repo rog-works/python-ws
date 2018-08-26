@@ -5,12 +5,7 @@ import yaml
 from errors.error import NotFoundError, IllegalArgumentError
 
 class Locale(object):
-	"""言語毎の翻訳データの管理と、マッピング
-
-	Attributes:
-		_lang: 言語キー
-		_transes: 翻訳データ
-	"""
+	"""言語毎の翻訳データの管理と、マッピング"""
 
 	def __init__(self, lang: str):
 		"""イベントデータからリクエストを生成
