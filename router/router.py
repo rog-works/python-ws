@@ -9,17 +9,20 @@ from errors.error import NotFoundError, IndexOutOfBoundError, DataFormatError
 class Router(object):
 	"""ルーティング定義の管理と、ハンドラーの導出"""
 
-	def __init__(self):
+	def __init__(self, path: str = 'config/routes.yml'):
 		"""インスタンスを生成"""
-		self._routes = self.__load(self.__config_path())
+		self._routes = self.__load(self.__routes_path(path))
 
-	def __config_path(self) -> str:
+	def __routes_path(self, path: str) -> str:
 		"""ルーティング定義ファイルの絶対パスを取得
+
+		Args:
+			path: 定義ファイルの相対パス
 
 		Returns:
 			定義ファイルの絶対パス
 		"""
-		return os.path.join(os.getcwd(), 'config', 'routes.yml')
+		return os.path.abspath(f'{os.getcwd()}/{path}')
 
 	def __load(self, path: str) -> dict:
 		"""ルーティング定義ファイルをロード
@@ -39,7 +42,22 @@ class Router(object):
 		f = open(path)
 		data = yaml.load(f)
 		f.close()
+
+		self.__validate_routes(data)
 		return data
+
+	def __validate_routes(self, routes: dict):
+		"""ルーティング定義をバリデーション
+
+		Args:
+			routes: ルーティング定義
+
+		Raises:
+			DataFormatError: ハンドラー定義が不正
+		"""
+		for key, value in routes.items():
+			if not re.match(r'^[\w.]+#[\w]+\.[\w]+$', value):
+				raise DataFormatError(f'Unexpected route deffinition. deffinition = "{value}"')
 
 	def __resolveDeffinition(self, route: str) -> tuple:
 		"""ルートに対応するハンドラー定義を取得
@@ -52,15 +70,11 @@ class Router(object):
 
 		Raises:
 			IndexOutBoundError: 定義に存在しないルート
-			DataFormatError: ハンドラー定義が不正
 		"""
 		if not route in self._routes:
 			raise IndexOutOfBoundError(f'Undefined route. route = "{route}"')
 
 		deffinition = self._routes[route]
-		if not re.match(r'^[\w.]+#[\w]+\.[\w]+$', deffinition):
-			raise DataFormatError(f'Unexpected route deffinition. deffinition = "{deffinition}"')
-
 		module, handler = deffinition.split('#')
 		klass, method = handler.split('.')
 		return module, klass, method
