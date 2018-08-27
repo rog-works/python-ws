@@ -50,7 +50,7 @@ class Config(object):
 		Returns:
 			設定値
 		"""
-		return self.__pluck(self._config, key.split('.'))
+		return self.__pluck(self._config, route.split('.'))
 
 	def __pluck(self, root, routes: list) -> str:
 		"""指定の参照パスに対応する設定値を取得

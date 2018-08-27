@@ -10,17 +10,17 @@ class GetDeviceResponse(Response):
 
 	def to_dict(self):
 		data = {
-			'key': self._device.key,
+			'key': self._device['key'],
 			'value': {
-				'id': self._device.id,
-				'type': self._device.type,
-				'v': self._device.v,
-				'valts': self._device.valts,
-				'val': self._device.val
+				'id': self._device['id'],
+				'type': self._device['type'],
+				'v': self._device['v'],
+				'valts': self._device['valts'],
+				'val': self._device['val']
 			}
 		}
 
-		if light_colors:
-			data['light_colors'] = light_colors
+		if self._light_colors:
+			data['light_colors'] = self._light_colors
 
 		return data
