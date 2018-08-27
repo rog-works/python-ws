@@ -33,6 +33,7 @@ class AwsLambda(object):
 		"""イベントデータから対応するハンドラーを呼び出し、レスポンスを返却
 
 		Args:
+			config: コンフィグ
 			event: イベントデータ
 
 		Returns:

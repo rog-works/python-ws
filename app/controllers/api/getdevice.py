@@ -29,4 +29,5 @@ class GetDevice(Controller):
 			レスポンス
 		"""
 		print('invoked #show')
-		return self.view({'scceed': True})
+		device = Device.get(self.request.query('id'))
+		return self.success(device.to_dict())
