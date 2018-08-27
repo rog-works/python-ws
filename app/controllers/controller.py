@@ -35,14 +35,3 @@ class Controller(object):
 	def request(self) -> Request:
 		"""リクエストを取得するプロパティ"""
 		return self._request
-
-	def view(self, data: dict) -> Response:
-		"""レスポンスを生成
-
-		Args:
-			data: レスポンスデータ
-
-		Returns:
-			レスポンス
-		"""
-		return Response(data)

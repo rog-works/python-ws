@@ -2,6 +2,8 @@
 
 from net.response import Response
 from app.controllers.controller import Controller
+from app.models.device import Device
+from app.models.lightcolors import LightColors
 
 class GetDevice(Controller):
 	"""デバイス情報取得コントローラー"""
@@ -28,6 +30,9 @@ class GetDevice(Controller):
 		Returns:
 			レスポンス
 		"""
-		print('invoked #show')
 		device = Device.get(self.request.query('id'))
-		return self.success(device.to_dict())
+		light_colors = LightColors.get() if device.has_color else []
+		return GetDeviceResponse(
+			device.to_dict,
+			light_colors
+		)
