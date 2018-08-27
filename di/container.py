@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from typing import Callable
-
 class Container(object):
 	@classmethod
 	def instance(cls):
@@ -12,17 +10,20 @@ class Container(object):
 	def __init__(self):
 		assert not hasattr(self.__class__, '__instance'), 'Do not call constructor directory'
 		self._factories = {}
-		self._instances = {}
+		self._caches = {}
 
 	def get(self, key: str):
 		if key not in self._factories:
 			return None
 
-		if key in self._instances:
-			return self._instances[key]
+		if key in self._caches:
+			return self._caches[key]
 
-		self._instances[key] = self._factories[key]()
-		return self._instances[key]
+		self._caches[key] = self._factories[key]()
+		return self._caches[key]
 
-	def register(self, key: str, factory: Callable[[], object]):
+	def register(self, key: str, factory):
+		if not callable(factory):
+			raise IllegalArgumentError(f'Unexpected factory. expected callable')
+
 		self._factories[key] = factory
