@@ -18,7 +18,7 @@ class Model(object):
 		#with Api().post(api, data) as res:
 		#	try:
 		#		return json(res)
-		#	except Exception as e:
+		#	except ValueError as e:
 		#		raise DataFormatError(f'JSON decode error. message = {e}')
 
 	def to_dict(self):

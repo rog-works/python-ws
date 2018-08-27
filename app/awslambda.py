@@ -43,7 +43,7 @@ class AwsLambda(object):
 			request = self.__build_request(event)
 			router = Router(config.get('routes.path'))
 			action = Action(*router.dispatch(request.url))
-			action.initialize(config, action, request)
+			action.instantiate(config, request)
 			return action.execute().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')

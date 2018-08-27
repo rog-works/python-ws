@@ -75,40 +75,39 @@ class Router(object):
 			raise IndexOutOfBoundError(f'Undefined route. route = "{route}"')
 
 		deffinition = self._routes[route]
-		module, handler = deffinition.split('#')
-		klass, method = handler.split('.')
-		return module, klass, method
+		module_path, handler = deffinition.split('#')
+		class_name, method_name = handler.split('.')
+		return module_path, class_name, method_name
 
-	def __resolveHander(self, module: str, klass: str, method: str) -> tuple:
-		"""指定のハンドラー定義からオブジェクトとハンドラーを取得
+	def __resolveHander(self, module_path: str, class_name: str, method_name: str) -> tuple:
+		"""指定のハンドラー定義からクラスタイプとメソッド名を取得
 
 		Args:
-			module: モジュールパス
-			klass: クラス名
-			method: メソッド名
+			module_path: モジュールパス
+			class_name: クラス名
+			method_name: メソッド名
 
 		Returns:
-			オブジェクトとハンドラーのタプル
+			クラスタイプとメソッド名のタプル
 		
 		Raises:
 			NotFoundError: ハンドラーが存在しない
 		"""
 		try:
-			mod = importlib.import_module(module)
-			obj = getattr(mod, klass)()
-			handler = getattr(obj, method)
-			return obj, handler
-		except Exception as e:
-			raise NotFoundError(f'Undefined handler. hander = {klass}.{method}, error = {e}')
+			module = importlib.import_module(module_path)
+			class_type = getattr(module, class_name)
+			return class_type, method_name
+		except AttributeError as e:
+			raise NotFoundError(f'Undefined handler. hander = {class_name}.{method_name}, message = {e}')
 
 	def dispatch(self, route: str) -> tuple:
-		"""指定のルートからオブジェクトとハンドラーを取得
+		"""指定のルートに対応するハンドラーのクラスタイプとメソッド名を取得
 
 		Args:
 			route: ルート
 
 		Returns:
-			オブジェクトとハンドラーのタプル
+			クラスタイプとメソッド名のタプル
 		"""
 		deffinition = self.__resolveDeffinition(route)
 		return self.__resolveHander(*deffinition)
