@@ -6,53 +6,12 @@ import re
 import yaml
 from errors.error import NotFoundError, IndexOutOfBoundError, DataFormatError
 
-class Action(object):
-	"""ハンドラーの管理と、ハンドリングの一連の操作を実行"""
-
-	def __init__(self, class_type: type, method_name: str):
-		"""インスタンスを生成
-
-		Args:
-			class_type: クラスタイプ
-			method_name: メソッド名
-		"""
-		self._class_type = class_type
-		self._method_name = method_name
-		self._obj = None
-
-	def instantiate(self, *args):
-		"""
-		ハンドラーオブジェクトを生成
-
-		Args:
-			*args: コンストラクタ用引数
-		"""
-		self._obj = self._class_type(*args)
-
-	def execute(self):
-		"""ハンドラーを実行し、レスポンスを返却
-
-		Returns:
-			レスポンス
-
-		Raises:
-			NotFoundError: ハンドラーメソッドが存在しない
-		"""
-		try:
-			if not self._obj:
-				self.instantiate()
-
-			handler = getattr(self._obj, self._method_name)
-			return handler()
-		except AttributeError as e:
-			raise NotFoundError(f'Undefined method. handler = "{self._class_type.__name__}.{self._method_name}", message = {e}')
-
 class Router(object):
 	"""ルーティング定義の管理と、ハンドラーの導出"""
 
 	def __init__(self, path: str = 'config/routes.yml'):
 		"""インスタンスを生成"""
-		self._routes = self.__load(self.__routes_path(path))
+		self._routes = self.__load_routes(self.__routes_path(path))
 
 	def __routes_path(self, path: str) -> str:
 		"""ルーティング定義ファイルの絶対パスを取得
@@ -65,7 +24,7 @@ class Router(object):
 		"""
 		return os.path.abspath(f'{os.getcwd()}/{path}')
 
-	def __load(self, path: str) -> dict:
+	def __load_routes(self, path: str) -> dict:
 		"""ルーティング定義ファイルをロード
 
 		Args:
@@ -76,6 +35,7 @@ class Router(object):
 
 		Raises:
 			NotFoundError: ルーティング定義ファイルが存在しない
+			DataFormatError: ハンドラー定義が不正
 		"""
 		if not os.path.exists(path):
 			raise NotFoundError(f'Not found route configuretion. path = "{path}"')
@@ -84,21 +44,25 @@ class Router(object):
 		data = yaml.load(f)
 		f.close()
 
-		self.__validate_routes(data)
+		if not self.__validate_routes(data):
+			raise DataFormatError(f'Unexpected route deffinition. deffinition = "{value}"')
+
 		return data
 
-	def __validate_routes(self, routes: dict):
+	def __validate_routes(self, routes: dict) -> bool:
 		"""ルーティング定義をバリデーション
 
 		Args:
 			routes: ルーティング定義
 
-		Raises:
-			DataFormatError: ハンドラー定義が不正
+		Returns:
+			True = 正常
 		"""
 		for key, value in routes.items():
 			if not re.match(r'^[\w.]+#[\w]+\.[\w]+$', value):
-				raise DataFormatError(f'Unexpected route deffinition. deffinition = "{value}"')
+				return False
+
+		return True
 
 	def __resolveDeffinition(self, route: str) -> tuple:
 		"""ルートに対応するハンドラー定義を取得
@@ -110,10 +74,10 @@ class Router(object):
 			ハンドラー定義のタプル
 
 		Raises:
-			IndexOutBoundError: 定義に存在しないルート
+			RouteMissmatchError: 定義に存在しないルート
 		"""
 		if not route in self._routes:
-			raise IndexOutOfBoundError(f'Undefined route. route = "{route}"')
+			raise RouteMissmatchError(f'Undefined route. route = "{route}"')
 
 		deffinition = self._routes[route]
 		module_path, handler = deffinition.split('#')
@@ -141,15 +105,46 @@ class Router(object):
 		except AttributeError as e:
 			raise NotFoundError(f'Undefined handler. hander = {class_name}.{method_name}, message = {e}')
 
-	def dispatch(self, route: str) -> Action:
-		"""指定のルートに対応するハンドラーのクラスタイプとメソッド名を取得
+	def resolve(self, route: str) -> 'Dispatcher':
+		"""指定のルートに対応するハンドラーへのディスパッチャーを取得
 
 		Args:
 			route: ルート
 
 		Returns:
-			クラスタイプとメソッド名のタプル
+			ディスパッチャー
 		"""
 		deffinition = self.__resolveDeffinition(route)
-		return Action(*self.__resolveHander(*deffinition))
+		return Dispatcher(*self.__resolveHander(*deffinition))
 
+class Dispatcher(object):
+	"""ハンドラーの管理と、ハンドリングの一連の操作を実行"""
+
+	def __init__(self, class_type: type, method_name: str):
+		"""インスタンスを生成
+
+		Args:
+			class_type: クラスタイプ
+			method_name: メソッド名
+		"""
+		self._class_type = class_type
+		self._method_name = method_name
+
+	def instantiate(self, *args):
+		"""
+		ハンドラーを生成
+
+		Args:
+			*args: コンストラクタ用引数
+
+		Returns:
+			ハンドラー
+
+		Raises:
+			RouteMissmatchError: ハンドラーメソッドが存在しない
+		"""
+		try:
+			obj = self._class_type(*args)
+			return getattr(obj, self._method_name)
+		except AttributeError as e:
+			raise RouteMissmatchError(f'Undefined method. handler = "{self._class_type.__name__}.{self._method_name}", message = {e}')

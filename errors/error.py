@@ -42,3 +42,8 @@ class DataFormatError(Error):
 	"""ファイルなどのデータ形式が不正である事を示す"""
 	def __init__(self, message: str):
 		super().__init__(message, 400)
+
+class RouterMissmatchError(Error):
+	"""未定義のルートを指定した事を示す"""
+	def __init__(self, message: str):
+		super().__init__(message, 400)
