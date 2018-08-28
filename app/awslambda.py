@@ -2,7 +2,6 @@
 
 from data.config import Config
 from router.router import Router
-from router.action import Action
 from net.request import Request, Builder
 from errors.error import Error
 
@@ -42,7 +41,7 @@ class AwsLambda(object):
 		try:
 			request = self.__build_request(event)
 			router = Router(config.get('routes.path'))
-			action = Action(*router.dispatch(request.url))
+			action = router.dispatch(request.url)
 			action.instantiate(config, request)
 			return action.execute().to_dict()
 		except Error as e:

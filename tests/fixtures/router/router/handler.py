@@ -2,4 +2,4 @@
 
 class TestRouter(object):
 	def handle(self):
-		pass
+		return 'success'
