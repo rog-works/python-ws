@@ -118,7 +118,7 @@ class Router(object):
 		return Dispatcher(*self.__resolveHander(*deffinition))
 
 class Dispatcher(object):
-	"""ハンドラーの管理と、ハンドリングの一連の操作を実行"""
+	"""ハンドラーを生成する"""
 
 	def __init__(self, class_type: type, method_name: str):
 		"""インスタンスを生成
