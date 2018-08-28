@@ -4,7 +4,14 @@ python-ws
 # インストール
 
 ```
-$ pip install yaml
+# download repository
+$ cd /path/to/ws
+ws$ git clone git@github.com:rog-works/python-ws.git
+
+# start docker container
+ws$ cd python-ws
+python-ws$ docker-compose build
+python-ws$ docker-compose up -d
 ```
 
 # テスト
@@ -12,5 +19,5 @@ $ pip install yaml
 ```
 $ cd /path/to/python-ws
 
-python-ws$ python -m unittest discover ./tests
+python-ws$ docker-compose exec app python -m unittest discover ./tests
 ```
