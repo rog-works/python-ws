@@ -21,3 +21,10 @@ class Controller(object):
 	def request(self) -> Request:
 		"""リクエストを取得するプロパティ"""
 		return self._request
+
+	def before(self):
+		print('called base before')
+
+	def after(self, response: Response) -> Response:
+		print('called base after')
+		return response
