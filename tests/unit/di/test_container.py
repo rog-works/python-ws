@@ -1,16 +1,15 @@
 # -*- config: utf-8 -*-
 
 import unittest
-from di.container import Container as DI
+from di.container import register, inject
 
 class TestContainer(unittest.TestCase):
-	def test_register(self):
-		di = DI.instance()
-		di.register('hoge', lambda : 123)
-		self.assertEqual(123, di.get('hoge'))
+	def test_register_and_inject(self):
+		register('hoge', lambda : 123)
 
-	def test_get(self):
-		di = DI.instance()
-		di.register('hoge', lambda : 123)
-		self.assertEqual(123, di.get('hoge'))
+		@inject('hoge')
+		def inner_func(hoge):
+			return hoge
+
+		self.assertEqual(123, inner_func())
 
