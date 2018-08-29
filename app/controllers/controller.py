@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from data.config import Config
-from di.di import inject
 from net.request import Request
 from net.response import Response
 
 class Controller(object):
 	"""コントローラーの基底クラス。コントローラー共通の処理を定義"""
 
-	@inject('config', 'request')
 	def __init__(self, config: Config, request: Request):
 		"""インスタンスを生成"""
 		self._config = config

@@ -42,10 +42,9 @@ class AwsLambda(object):
 		try:
 			Bootstrap(config)
 			request = self.__build_request(event)
-			register('request', lambda : request)
 			router = Router(config.get('routes.path'))
 			receiver = router.dispatch(request.url)
-			handler = receiver.instantiate()
+			handler = receiver.instantiate(config, request)
 			return handler().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')

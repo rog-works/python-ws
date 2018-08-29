@@ -5,10 +5,6 @@ from di.di import register, inject
 
 class TestContainer(unittest.TestCase):
 	def test_register_and_inject(self):
-		register('hoge', lambda : 123)
-		register('fuga', lambda : '456')
-		register('piyo', lambda : [789])
-
 		@inject('hoge')
 		def injectx1_func(hoge):
 			return hoge
@@ -34,6 +30,10 @@ class TestContainer(unittest.TestCase):
 			@classmethod
 			def injectx1_argx2_func(cls, arg1, arg2, piyo):
 				return arg1, arg2, piyo
+
+		register('hoge', lambda : 123)
+		register('fuga', lambda : '456')
+		register('piyo', lambda : [789])
 
 		self.assertEqual(123, injectx1_func())
 		self.assertEqual(('arg1', '456'), injectx1_arg_func('arg1'))

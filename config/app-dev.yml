@@ -8,7 +8,7 @@ api:
 
 di:
   locale:
-    module: i18n.local
+    module: i18n.locale
     class: Locale
     args:
       - jp

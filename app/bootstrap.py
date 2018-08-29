@@ -1,7 +1,7 @@
 # -*- config: utf-8 -*-
 
 import os
-import importlib
+from importlib import import_module
 from data.config import Config
 from di.di import register
 
@@ -19,7 +19,7 @@ class Bootstrap(object):
 					module_path = deffinition['module']
 					class_name = deffinition['class']
 					args = tuple(deffinition['args'])
-					register(key, lambda : getattr(importlib.load_module(module_path), class_name)(*args))
+					register(key, lambda : getattr(import_module(module_path), class_name)(*args))
 			except ImportError as e:
 				raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
 			except AttributeError as e:
