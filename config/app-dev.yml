@@ -5,3 +5,10 @@ api:
   url: 'https://hostname/api'
   access_key: ''
   access_token: ''
+
+di:
+  locale:
+    module: i18n.local
+    class: Locale
+    args:
+      - jp

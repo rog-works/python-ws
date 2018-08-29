@@ -3,7 +3,7 @@
 import os
 import yaml
 from data.config import Config
-from errors.error import NotFoundError, IllegalArgumentError
+from errors.error import IllegalArgumentError
 
 class Locale(object):
 	"""言語毎の翻訳データの管理と、翻訳"""
