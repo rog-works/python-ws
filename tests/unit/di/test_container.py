@@ -1,7 +1,7 @@
 # -*- config: utf-8 -*-
 
 import unittest
-from di.container import register, inject
+from di.di import register, inject
 
 class TestContainer(unittest.TestCase):
 	def test_register_and_inject(self):
