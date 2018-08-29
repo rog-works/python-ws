@@ -1,5 +1,6 @@
 routes:
   path: config/routes.yml
+
 api:
   url: 'https://hostname/api'
   access_key: ''

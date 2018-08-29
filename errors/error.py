@@ -43,7 +43,7 @@ class DataFormatError(Error):
 	def __init__(self, message: str):
 		super().__init__(message, 400)
 
-class RouterMissmatchError(Error):
+class RouteMissmatchError(Error):
 	"""未定義のルートを指定した事を示す"""
 	def __init__(self, message: str):
 		super().__init__(message, 400)

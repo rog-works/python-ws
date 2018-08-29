@@ -7,3 +7,5 @@ services:
     volumes:
       - ./:/opt/app
     command: "tail -f /dev/null"
+    environment:
+      - ENV=dev

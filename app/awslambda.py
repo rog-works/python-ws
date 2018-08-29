@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from app.bootstrap import bootstrap
+from app.bootstrap import Bootstrap
+from data.config import Config
 from di.di import register
 from router.router import Router
 from net.request import Request, Builder
@@ -29,7 +30,7 @@ class AwsLambda(object):
 			builder.body(event['body'])
 		return builder.build()
 
-	def run(self, event: dict) -> dict:
+	def run(self, config: Config, event: dict) -> dict:
 		"""イベントデータから対応するハンドラーを呼び出し、レスポンスを返却
 
 		Args:
@@ -39,12 +40,12 @@ class AwsLambda(object):
 			レスポンスの連想配列
 		"""
 		try:
-			bootstrap()
+			Bootstrap(config)
 			request = self.__build_request(event)
 			register('request', lambda : request)
 			router = Router(config.get('routes.path'))
-			dispatcher = router.resolve(request.url)
-			handler = dispatcher.instantiate()
+			receiver = router.dispatch(request.url)
+			handler = receiver.instantiate()
 			return handler().to_dict()
 		except Error as e:
 			raise Exception(f'{e.code}: message = {e.message}')

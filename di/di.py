@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from errors.error import NotFoundError, IllegalArgumentError
+
 class __Container(object):
 	__instance = None
 
@@ -15,7 +17,7 @@ class __Container(object):
 
 	def get(self, key: str):
 		if key not in self._factories:
-			raise AttributeError(f'Undefined key. key = {key}')
+			raise NotFoundError(f'Undefined key. key = "{key}"')
 
 		if key in self._caches:
 			return self._caches[key]

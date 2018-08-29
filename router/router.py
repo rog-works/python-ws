@@ -4,7 +4,7 @@ import os
 import importlib
 import re
 import yaml
-from errors.error import NotFoundError, IndexOutOfBoundError, DataFormatError
+from errors.error import NotFoundError, DataFormatError, RouteMissmatchError
 
 class Router(object):
 	"""ルーティング定義の管理と、ハンドラーの導出"""
@@ -105,19 +105,19 @@ class Router(object):
 		except AttributeError as e:
 			raise NotFoundError(f'Undefined handler. hander = {class_name}.{method_name}, message = {e}')
 
-	def resolve(self, route: str) -> 'Dispatcher':
-		"""指定のルートに対応するハンドラーへのディスパッチャーを取得
+	def dispatch(self, route: str) -> 'Dispatcher':
+		"""指定のルートに対応するハンドラーファクトリーを取得
 
 		Args:
 			route: ルート
 
 		Returns:
-			ディスパッチャー
+			ファクトリー
 		"""
 		deffinition = self.__resolveDeffinition(route)
-		return Dispatcher(*self.__resolveHander(*deffinition))
+		return Receiver(*self.__resolveHander(*deffinition))
 
-class Dispatcher(object):
+class Receiver(object):
 	"""ハンドラーを生成する"""
 
 	def __init__(self, class_type: type, method_name: str):

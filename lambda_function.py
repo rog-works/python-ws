@@ -9,4 +9,5 @@ from data.config import Config
 from app.awslambda import AwsLambda as App
 
 def lambda_handler(event, context):
-	return App().run(Config('config/app-dev.yml'), event)
+	config = Config(f'config/app-{os.getenv("ENV", "dev")}.yml')
+	return App().run(config, event)
