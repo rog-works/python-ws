@@ -7,6 +7,9 @@ api:
   access_token: ''
 
 di:
+  auth:
+    module: app.lib.auth
+    class: Auth
   locale:
     module: i18n.locale
     class: Locale
