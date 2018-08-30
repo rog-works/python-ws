@@ -7,11 +7,12 @@ api:
   access_token: ''
 
 di:
-  auth:
-    module: app.lib.auth
-    class: Auth
-  locale:
-    module: i18n.locale
-    class: Locale
+  app.lib.auth.Auth:
+    path: app.lib.auth
+    module: Auth
+    args: []
+  i18n.locale.Locale:
+    path: i18n.locale
+    module: Locale
     args:
       - jp

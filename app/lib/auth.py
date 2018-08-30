@@ -3,16 +3,16 @@
 from external.models.user import User
 from net.request import Request
 from di.di import inject
-from errors.error import UnauthorizationError
+from errors.error import UnauthorizedError
 
-class Auth(object):
+class __Auth(object):
 	def __init__(self):
 		user = self.__signon()
 		if not user:
-			raise UnauthorizationError('Unauthorized')
+			raise UnauthorizedError('Unauthorized')
 
-		self._user_id = user.id
-		self._user_token = user.token
+		self.user_id = user.id
+		self.user_token = user.token
 
 	@inject('request')
 	def __signon(self, request: Request) -> User:
@@ -21,3 +21,5 @@ class Auth(object):
 			request.header('X-Access-Token')
 		)
 
+def authorize():
+	return __Auth().__dict__

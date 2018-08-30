@@ -16,10 +16,10 @@ class Bootstrap(object):
 		if deffinitions:
 			try:
 				for key, deffinition in deffinitions.items():
-					module_path = deffinition['module']
-					class_name = deffinition['class']
+					path = deffinition['path']
+					module = deffinition['module']
 					args = tuple(deffinition['args'])
-					register(key, lambda : getattr(import_module(module_path), class_name)(*args))
+					register(key, lambda : getattr(import_module(path), module)(*args))
 			except ImportError as e:
 				raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
 			except AttributeError as e:
