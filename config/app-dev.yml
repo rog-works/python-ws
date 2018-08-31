@@ -9,6 +9,17 @@ api:
   access_token: ''
 
 di:
+  logger:
+    path: log.logger
+    module: Logger
+    args: []
+
+  log-provider:
+    path: log.provider.file
+    module: FileLogger
+    args:
+      - /logs/app.log
+
   authorize:
     path: app.lib.auth
     module: authorize

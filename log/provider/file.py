@@ -1,0 +1,3 @@
+
+class FileLogger(object):
+	pass
