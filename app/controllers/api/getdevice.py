@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from net.response import Response
+from di.di import inject
+from app.lib.auth import authorize
 from app.controllers.controller import Controller
 from app.models.device import Device
 from app.models.lightcolors import LightColors
@@ -10,7 +12,8 @@ from app.plugins.behavior import behavior
 class GetDevice(Controller):
 	"""デバイス情報取得コントローラー"""
 
-	def before(self):
+	@inject('authorize')
+	def before(self, auth: dict):
 		super().before()
 		print('called sub before')
 

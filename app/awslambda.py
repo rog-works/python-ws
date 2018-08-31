@@ -40,8 +40,8 @@ class AwsLambda(object):
 			レスポンスの連想配列
 		"""
 		try:
-			Bootstrap(config)
 			request = self.__build_request(event)
+			Bootstrap(config, request)
 			router = Router(config.get('routes.path'))
 			receiver = router.dispatch(request.url)
 			handler = receiver.instantiate(config, request)
