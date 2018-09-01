@@ -12,7 +12,7 @@ class Model(object):
 				'type': 2,
 				'v': 3,
 				'valts': 4,
-				'val': 5
+				'val': 5,
 			}
 		}
 		#with Api().post(api, data) as res:

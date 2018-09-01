@@ -17,7 +17,7 @@ di:
       - /logs/app.log
 
   authorize:
-    path: app.lib.auth
+    path: app.libs.auth
     module: authorize
     args: []
 

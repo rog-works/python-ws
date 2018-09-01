@@ -39,7 +39,7 @@ class FileLogger(Logger):
 				datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
 				f'[{write_level.name}]'
 			]
-			values.extend(list(map(lambda arg: str(arg), args)))
+			values.extend(list(map(str, args)))
 			self.__flush(' '.join(values))
 
 	def __flush(self, line: str):

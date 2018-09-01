@@ -10,12 +10,12 @@ class TestAwsLambda(unittest.TestCase):
 		App().run(config, {
 			'url': '/api/GetDevice',
 			'headers': {
-				'Authorization': 'auth_key'
+				'Authorization': 'auth_key',
 			},
 			'queries': {
-				'hoge': 'fuga'
+				'hoge': 'fuga',
 			},
 			'body': {
-				'fizz': 'buzz'
-			}
+				'fizz': 'buzz',
+			},
 		})

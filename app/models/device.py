@@ -50,5 +50,5 @@ class Device(Model):
 			'type': self._type,
 			'v': self._v,
 			'valts': self._valts,
-			'val': self._val
+			'val': self._val,
 		}

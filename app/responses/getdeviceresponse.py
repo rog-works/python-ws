@@ -16,7 +16,7 @@ class GetDeviceResponse(Response):
 				'type': self._device['type'],
 				'v': self._device['v'],
 				'valts': self._device['valts'],
-				'val': self._device['val']
+				'val': self._device['val'],
 			}
 		}
 

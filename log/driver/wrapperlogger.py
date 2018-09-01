@@ -4,7 +4,7 @@ import logging
 from log.logger import LogLevels, Logger
 
 class WrapperLogger(Logger):
-	def __init__(self, level):
+	def __init__(self, level: str):
 		super().__init__(LogLevels[level])
 		self._logger = logging.getLogger()
 		self._logger.setLevel(self.__to_logging_level(self._level))
