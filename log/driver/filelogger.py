@@ -29,7 +29,7 @@ class FileLogger(Logger):
 		:param str path: ファイルの相対パス
 		:return str:
 		"""
-		return os.path.abspath(f'{os.getcwd()}{path}')
+		return os.path.abspath(f'{os.getcwd()}/{path}')
 
 	def debug(self, *args):
 		"""ログ出力(DEBUG)

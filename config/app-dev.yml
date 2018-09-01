@@ -14,7 +14,7 @@ di:
     module: FileLogger
     args:
       - DEBUG
-      - /logs/app.log
+      - logs/app.log
 
   authorize:
     path: app.libs.auth
