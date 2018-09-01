@@ -9,4 +9,4 @@ class TestApp(Controller):
 
 class DummyResponse(Response):
 	def to_dict(self) -> dict:
-		return {}
+		return {'success': True}

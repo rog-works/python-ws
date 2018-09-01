@@ -34,10 +34,8 @@ class GetDevice(Controller):
 
 		:return Response: レスポンス
 		"""
-		self.logger.info('hogehoge', 12345, [12345], {'hoge': 'fuga'})
 		device = Device.get(self.request.query('id'))
-		light_colors = LightColors.get() if device.has_color else []
 		return GetDeviceResponse(
 			device.to_dict(),
-			light_colors
+			LightColors.get().to_dict() if device.has_color else {}
 		)
