@@ -25,7 +25,7 @@ class __Container(object):
 	def get(self, key: str):
 		"""登録キーに対応するファクトリーからインスタンスを生成して返却
 
-		:param: str key: 登録キー
+		:param str key: 登録キー
 		:return any: キーに対応するインスタンス
 		"""
 		if key not in self._factories:
@@ -40,8 +40,8 @@ class __Container(object):
 	def register(self, key: str, factory):
 		"""ファクトリーを登録
 
-		:param: str key: 登録キー
-		:param: function factory: ファクトリー
+		:param str key: 登録キー
+		:param function factory: ファクトリー
 		"""
 		if not callable(factory):
 			raise IllegalArgumentError(f'Unexpected factory. expected callable')
@@ -52,8 +52,8 @@ class __Container(object):
 def register(key: str, factory):
 	"""ファクトリーをDIコンテナに登録
 
-	:param: str key: 登録キー
-	:param: function factory: ファクトリー
+	:param str key: 登録キー
+	:param function factory: ファクトリー
 	"""
 	__Container.instance().register(key, factory)
 
@@ -65,7 +65,7 @@ def inject(*keys):
 		def func(self, inject_instance):
 			pass
 
-	:param: tuple *key: 注入する登録キーリスト
+	:param tuple *key: 注入する登録キーリスト
 	"""
 	def decorator(wrapper_func):
 		def wrapper(*args):

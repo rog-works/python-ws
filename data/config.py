@@ -49,8 +49,8 @@ class Config(object):
 	def __pluck(self, root, routes: list):
 		"""指定の参照パスに対応するデータを取得
 
-		:param: dict|list root: 参照ルート
-		:param: list routes: 参照キーリスト
+		:param dict|list root: 参照ルート
+		:param list routes: 参照キーリスト
 		:return any: データ
 		"""
 		key = routes[0]
