@@ -14,10 +14,16 @@ class GetDevice(Controller):
 
 	@inject('authorize')
 	def before(self, auth: dict):
+		"""ハンドラーの事前処理"""
 		super().before()
 		print('called sub before')
 
 	def after(self, response: Response) -> Response:
+		"""ハンドラーの事後処理
+
+		:param Response response: レスポンス
+		:return Response: レスポンス
+		"""
 		response = super().after(response)
 		print('called sub after')
 		return response
@@ -26,8 +32,7 @@ class GetDevice(Controller):
 	def handle(self) -> Response:
 		"""デバイス情報を取得
 
-		Returns:
-			レスポンス
+		:return Response: レスポンス
 		"""
 		self.logger.info('hogehoge', 12345, [12345], {'hoge': 'fuga'})
 		device = Device.get(self.request.query('id'))

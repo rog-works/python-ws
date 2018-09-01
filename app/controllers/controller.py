@@ -27,11 +27,18 @@ class Controller(object):
 	@property
 	@inject('logger')
 	def logger(self, logger: Logger) -> Logger:
+		"""ログマネージャを取得するプロパティ"""
 		return logger
 
 	def before(self):
+		"""ハンドラーの事前処理"""
 		print('called base before')
 
 	def after(self, response: Response) -> Response:
+		"""ハンドラーの事後処理
+
+		:param Response response: レスポンス
+		:return Response: レスポンス
+		"""
 		print('called base after')
 		return response
