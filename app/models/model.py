@@ -22,4 +22,4 @@ class Model(object):
 		#		raise DataFormatError(f'JSON decode error. message = {e}')
 
 	def to_dict(self):
-		assert True, f'Not implemented method. {self.__class__.__name__}.{self.__name__}'
+		assert False, f'Not implemented to_dict.'

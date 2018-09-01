@@ -40,6 +40,13 @@ class TestRequest(unittest.TestCase):
 		self.assertEqual(expected, Request(*args).query(key))
 
 	@data_provider(lambda: [
+		({'hoge': 1}, ('', 'GET', {}, {'hoge': 1}, {})),
+		({'hoge': 1, 'fuga': 2, 'piyo': 3}, ('', 'GET', {}, {'hoge': 1, 'fuga': 2, 'piyo': 3}, {}))
+	])
+	def test_body(self, expected, args):
+		self.assertEqual(expected, Request(*args).queries)
+
+	@data_provider(lambda: [
 		({'hoge': 1}, ('', 'GET', {}, {}, {'hoge': 1})),
 		({'hoge': 1, 'fuga': 2, 'piyo': 3}, ('', 'GET', {}, {}, {'hoge': 1, 'fuga': 2, 'piyo': 3}))
 	])

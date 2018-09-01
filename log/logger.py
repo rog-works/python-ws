@@ -36,32 +36,32 @@ class Logger(object):
 
 		:param tuple *args: 出力パラメータ
 		"""
-		assert True, f'Not implemented {self.__name__}'
+		assert False, f'Not implemented debug.'
 
 	def info(self, *args):
 		"""ログ出力(INFO)
 
 		:param tuple *args: 出力パラメータ
 		"""
-		assert True, f'Not implemented {self.__name__}'
+		assert False, f'Not implemented info.'
 
 	def warning(self, *args):
 		"""ログ出力(WARNING)
 
 		:param tuple *args: 出力パラメータ
 		"""
-		assert True, f'Not implemented {self.__name__}'
+		assert False, f'Not implemented warning.'
 
 	def error(self, *args):
 		"""ログ出力(ERROR)
 
 		:param tuple *args: 出力パラメータ
 		"""
-		assert True, f'Not implemented {self.__name__}'
+		assert False, f'Not implemented error.'
 
 	def critical(self, *args):
 		"""ログ出力(CRITICAL)
 
 		:param tuple *args: 出力パラメータ
 		"""
-		assert True, f'Not implemented {self.__name__}'
+		assert False, f'Not implemented critical.'
