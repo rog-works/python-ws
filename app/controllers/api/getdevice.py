@@ -2,7 +2,7 @@
 
 from net.response import Response
 from di.di import inject
-from app.lib.auth import authorize
+from app.libs.auth import authorize
 from app.controllers.controller import Controller
 from app.models.device import Device
 from app.models.lightcolors import LightColors
