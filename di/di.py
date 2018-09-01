@@ -38,9 +38,9 @@ def inject(*keys):
 	def decorator(wrapper_func):
 		def wrapper(*args):
 			di = __Container.instance()
-			key_list = list(map(lambda key: di.get(key), keys))
+			instances = list(map(di.get, keys))
 			args_list = list(args)
-			args_list.extend(key_list)
+			args_list.extend(instances)
 			return wrapper_func(*tuple(args_list))
 		return wrapper
 	return decorator
