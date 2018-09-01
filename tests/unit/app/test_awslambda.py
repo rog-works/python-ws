@@ -6,7 +6,7 @@ from app.lambdaapp import LambdaApp as App
 
 class TestAwsLambda(unittest.TestCase):
 	def test_run(self):
-		config = Config('tests/fixtures/app/lambdaapp/config.yml')
+		config = Config('tests/unit/app/fixtures/lambdaapp/config.yml')
 		App().run(config, {
 			'url': '/test/App',
 			'headers': {

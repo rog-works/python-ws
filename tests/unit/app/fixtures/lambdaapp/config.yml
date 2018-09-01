@@ -1,0 +1,2 @@
+routes:
+  path: tests/unit/app/fixtures/lambdaapp/routes.yml
