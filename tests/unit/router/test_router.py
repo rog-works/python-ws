@@ -2,7 +2,7 @@
 
 import unittest
 from tests.helper.fixture import data_provider
-from router.router import Router
+from routing.router import Router
 
 class TestRouter(unittest.TestCase):
 	def test_dispatch(self):
