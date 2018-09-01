@@ -6,9 +6,8 @@ class Error(Exception):
 	def __init__(self, message: str, code: int):
 		"""インスタンスを生成
 
-		Args:
-			message: エラーメッセージ
-			code: エラーコード
+		:param str message: エラーメッセージ
+		:param int code: エラーコード
 		"""
 		self._message = message
 		self._code = code
