@@ -29,6 +29,7 @@ class GetDevice(Controller):
 		Returns:
 			レスポンス
 		"""
+		self.logger.info('hogehoge', 12345, [12345], {'hoge': 'fuga'})
 		device = Device.get(self.request.query('id'))
 		light_colors = LightColors.get() if device.has_color else []
 		return GetDeviceResponse(

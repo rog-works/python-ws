@@ -3,6 +3,8 @@
 from data.config import Config
 from net.request import Request
 from net.response import Response
+from log.logger import Logger
+from di.di import inject
 
 class Controller(object):
 	"""コントローラーの基底クラス。コントローラー共通の処理を定義"""
@@ -21,6 +23,11 @@ class Controller(object):
 	def request(self) -> Request:
 		"""リクエストを取得するプロパティ"""
 		return self._request
+
+	@property
+	@inject('logger')
+	def logger(self, logger: Logger) -> Logger:
+		return logger
 
 	def before(self):
 		print('called base before')
