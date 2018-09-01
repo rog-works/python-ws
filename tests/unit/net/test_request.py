@@ -63,4 +63,5 @@ class TestBuilder(unittest.TestCase):
 		self.assertEqual('application/json', req.header('Content-Type'))
 		self.assertEqual(1, req.query('page'))
 		self.assertEqual(10, req.query('limit'))
+		self.assertEqual({'page': 1, 'limit': 10}, req.queries)
 		self.assertEqual({'content': 'hogefugapiyo'}, req.body)

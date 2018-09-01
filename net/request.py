@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import copy
+
 class Request(object):
 	"""リクエスト情報の管理"""
 
@@ -61,9 +63,14 @@ class Request(object):
 		return self._queries[key] if key in self._queries else default
 
 	@property
+	def queries(self) -> dict:
+		"""クエリーを取得するプロパティ"""
+		return copy.deepcopy(self._queries)
+
+	@property
 	def body(self) -> dict:
 		"""リクエストボディを取得するプロパティ"""
-		return self._body
+		return copy.deepcopy(self._body)
 
 class Builder(object):
 	"""リクエストの生成情報の管理とリクエストの生成"""
