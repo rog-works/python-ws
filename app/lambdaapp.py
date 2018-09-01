@@ -7,7 +7,7 @@ from routing.router import Router
 from net.request import Request, Builder
 from error.errors import Error
 
-class AwsLambda(object):
+class LambdaApp(object):
 	"""AWS Lambda用アプリケーション"""
 
 	def __build_request(self, event: dict) -> Request:

@@ -2,11 +2,11 @@
 
 import unittest
 from data.config import Config
-from app.awslambda import AwsLambda as App
+from app.lambdaapp import LambdaApp as App
 
 class TestAwsLambda(unittest.TestCase):
 	def test_run(self):
-		config = Config('tests/fixtures/app/awslambda/config.yml')
+		config = Config('tests/fixtures/app/lambdaapp/config.yml')
 		App().run(config, {
 			'url': '/test/App',
 			'headers': {

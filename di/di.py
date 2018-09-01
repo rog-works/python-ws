@@ -31,7 +31,7 @@ class __Container(object):
 		if key not in self._factories:
 			raise NotFoundError(f'Undefined key. key = "{key}"')
 
-		if self._caches[key] not None:
+		if self._caches[key] is not None:
 			return self._caches[key]
 
 		self._caches[key] = self._factories[key]()
