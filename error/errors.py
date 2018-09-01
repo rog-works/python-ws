@@ -52,3 +52,8 @@ class UnauthorizedError(Error):
 	"""認証に失敗した事を示す"""
 	def __init__(self, message: str):
 		super().__init__(message, 400)
+
+class NotPermittedError(Error):
+	"""実行権限がない事を示す"""
+	def __init__(self, message: str):
+		super().__init__(message, 400)
