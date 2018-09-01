@@ -49,13 +49,22 @@ class __Container(object):
 		self._factories[key] = factory
 		self._caches[key] = None
 
-def register(key: str, factory):
-	"""ファクトリーをDIコンテナに登録
+def register(key: str = None):
+	"""戻り値のファクトリーをDIコンテナに登録する関数デコレーター
 
-	:param str key: 登録キー
-	:param function factory: ファクトリー
+	:example:
+		@register('register_key')
+		def func(self, value):
+			return lambda : value
 	"""
-	__Container.instance().register(key, factory)
+	def decorator(wrapper_func):
+		def wrapper(*args):
+			if key:
+				__Container.instance().register(key, wrapper_func(*args))
+			else:
+				__Container.instance().register(*wrapper_func(*args))
+		return wrapper
+	return decorator
 
 def inject(*keys):
 	"""指定の関数にインスタンスを注入する関数デコレーター

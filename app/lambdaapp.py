@@ -18,6 +18,8 @@ class LambdaApp(object):
 		builder = Builder()
 		if 'url' in event:
 			builder.url(event['url'])
+		if 'method' in event:
+			builder.method(event['method'])
 		if 'headers' in event:
 			builder.headers(event['headers'])
 		if 'queries' in event:

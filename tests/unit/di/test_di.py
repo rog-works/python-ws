@@ -26,20 +26,31 @@ class TestContainer(unittest.TestCase):
 			def injectx1_arg_func(self, arg, fuga):
 				return arg, fuga
 
-			@inject('piyo')
 			@classmethod
+			@inject('piyo')
 			def injectx1_argx2_func(cls, arg1, arg2, piyo):
 				return arg1, arg2, piyo
 
-		register('hoge', lambda : 123)
-		register('fuga', lambda : '456')
-		register('piyo', lambda : [789])
+		@register('hoge')
+		def register_hoge(value):
+			return lambda : value
+
+		@register('fuga')
+		def register_fuga(value):
+			return lambda : value
+
+		@register()
+		def register_di(key, value):
+			return key, lambda : value
+
+		register_hoge(123)
+		register_fuga('456')
+		register_di('piyo', [789])
 
 		self.assertEqual(123, injectx1_func())
 		self.assertEqual(('arg1', '456'), injectx1_arg_func('arg1'))
 		self.assertEqual(('arg1', '456', [789]), injectx2_arg_func('arg1'))
 		self.assertEqual(123, InnerClass().hoge)
 		self.assertEqual(('arg1', '456'), InnerClass().injectx1_arg_func('arg1'))
-		with self.assertRaises(TypeError):
-			InnerClass.injectx1_argx2_func('hoge', 'fuga')
+		self.assertEqual(('hoge', 'fuga', [789]), InnerClass.injectx1_argx2_func('hoge', 'fuga'))
 

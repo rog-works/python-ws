@@ -23,28 +23,40 @@ class Bootstrap(object):
 		:param Request request: リクエスト
 		:raise DataFormatError: コンフィグ内のDI定義が不正
 		"""
-		register('config', lambda : config)
-		register('request', lambda : request)
+		self.__register_config(config)
+		self.__register_request(request)
 
 		deffinitions = config.get('di')
 		if deffinitions:
-			try:
-				for key, deffinition in deffinitions.items():
-					path = deffinition['path']
-					module = deffinition['module']
-					args = tuple(deffinition['args'])
-					register(key, self.__lazy_load_module(path, module, *args))
-			except ImportError as e:
-				raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
-			except AttributeError as e:
-				raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
+			for key, deffinition in deffinitions.items():
+				self.__register_by_deffinition(key, deffinition)
 
-	def __lazy_load_module(self, path: str, module: str, *args):
+	def __register_by_deffinition(self, key: str, deffinition: dict):
+		try:
+			path = deffinition['path']
+			module = deffinition['module']
+			args = tuple(deffinition['args'])
+			self.__register_di(key, path, module, *args)
+		except ImportError as e:
+			raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
+		except AttributeError as e:
+			raise DataFormatError(f'Unexpected di deffinition. key = {key}, deffinition = {deffinition}')
+
+	@register('config')
+	def __register_config(self, config: Config):
+		return lambda : config
+
+	@register('request')
+	def __register_request(self, request: Request):
+		return lambda : request
+
+	@register()
+	def __register_di(self, key: str, path: str, module: str, *args):
 		"""モジュールファクトリーの生成
 
 		:param str path: モジュールパス
 		:param str module: モジュール名
 		:param tuple *args: モジュールへの引数
-		:return function: モジュールファクトリー
+		:return tuple: 登録キーとモジュールファクトリーのタプル
 		"""
-		return lambda : getattr(import_module(path), module)(*args)
+		return key, lambda : getattr(import_module(path), module)(*args)
