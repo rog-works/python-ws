@@ -3,7 +3,7 @@
 import os
 from datetime import datetime
 from log.logger import LogLevels, Logger
-from errors.error import IllegalArgumentError
+from error.errors import IllegalArgumentError
 
 class FileLogger(Logger):
 	def __init__(self, level: str, path: str):

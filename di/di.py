@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from errors.error import NotFoundError, IllegalArgumentError
+from error.errors import NotFoundError, IllegalArgumentError
 
 class __Container(object):
 	__instance = None

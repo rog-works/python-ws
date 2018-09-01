@@ -5,7 +5,7 @@ from data.config import Config
 from di.di import register
 from router.router import Router
 from net.request import Request, Builder
-from errors.error import Error
+from error.errors import Error
 
 class AwsLambda(object):
 	"""AWS Lambda用アプリケーション"""

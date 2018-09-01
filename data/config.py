@@ -3,7 +3,7 @@
 import os
 import re
 import yaml
-from errors.error import NotFoundError
+from error.errors import NotFoundError
 
 class Config(object):
 	def __init__(self, path: str):

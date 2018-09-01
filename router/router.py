@@ -4,7 +4,7 @@ import os
 import importlib
 import re
 import yaml
-from errors.error import NotFoundError, DataFormatError, RouteMissmatchError
+from error.errors import NotFoundError, DataFormatError, RouteMissmatchError
 
 class Router(object):
 	"""ルーティング定義の管理と、ハンドラーの導出"""
