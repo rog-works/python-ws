@@ -32,6 +32,11 @@ class Bootstrap(object):
 				self.__register_by_deffinition(key, deffinition)
 
 	def __register_by_deffinition(self, key: str, deffinition: dict):
+		"""モジュール定義からDIコンテナーにモジュールファクトリーを登録
+
+		:param str key: 登録キー
+		:param dict deffinition: モジュール定義
+		"""
 		try:
 			path = deffinition['path']
 			module = deffinition['module']
@@ -44,10 +49,20 @@ class Bootstrap(object):
 
 	@register('config')
 	def __register_config(self, config: Config):
+		"""モジュールファクトリーの生成(コンフィグ)
+
+		:param Config config: コンフィグ
+		:return function: モジュールファクトリー
+		"""
 		return lambda : config
 
 	@register('request')
 	def __register_request(self, request: Request):
+		"""モジュールファクトリーの生成(リクエスト)
+
+		:param Request request: リクエスト
+		:return function: モジュールファクトリー
+		"""
 		return lambda : request
 
 	@register()
