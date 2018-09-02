@@ -44,4 +44,4 @@ class LambdaApp(object):
 			handler = receiver.instantiate(config, request)
 			return handler().to_dict()
 		except Error as e:
-			raise Exception(f'{e.code}: error = {type(e)}, message = {e.message}')
+			raise Exception(f'[{e.code}] {e.__class__.__name__}: {e.message}')
