@@ -9,3 +9,10 @@ services:
     command: "tail -f /dev/null"
     environment:
       - ENV=dev
+
+  swagger:
+    container_name: py-swagger
+    image: swaggerapi/swagger-editor
+    ports:
+      - 8080:8080
+
