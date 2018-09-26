@@ -10,18 +10,14 @@ api:
 
 di:
   logger:
-    path: log.logger
-    module: Logger
-    args: []
-
-  log-provider:
-    path: log.provider.file
+    path: log.driver.filelogger
     module: FileLogger
     args:
-      - /logs/app.log
+      - DEBUG
+      - logs/app.log
 
   authorize:
-    path: app.lib.auth
+    path: app.libs.auth
     module: authorize
     args: []
 

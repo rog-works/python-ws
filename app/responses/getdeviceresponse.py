@@ -4,7 +4,7 @@ from net.response import Response
 from app.models.device import Device
 
 class GetDeviceResponse(Response):
-	def __init__(self, device: dict, light_colors: list):
+	def __init__(self, device: dict, light_colors: dict):
 		self._device = device
 		self._light_colors = light_colors
 
@@ -16,11 +16,11 @@ class GetDeviceResponse(Response):
 				'type': self._device['type'],
 				'v': self._device['v'],
 				'valts': self._device['valts'],
-				'val': self._device['val']
+				'val': self._device['val'],
 			}
 		}
 
 		if self._light_colors:
-			data['light_colors'] = self._light_colors
+			data['light_colors'] = self._light_colors['items']
 
 		return data

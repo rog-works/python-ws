@@ -3,7 +3,7 @@
 # from external.models.user import User
 from net.request import Request
 from di.di import inject
-from errors.error import UnauthorizedError
+from error.errors import UnauthorizedError
 
 class __Auth(object):
 	def __init__(self):

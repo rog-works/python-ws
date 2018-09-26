@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
 class LightColors(object):
-	def get() -> list:
-		return [0x000000, 0xFFFFFF]
+	@classmethod
+	def get(cls):
+		return cls()
+
+	def to_dict(self):
+		return {
+			'items': [0x000000, 0xFFFFFF],
+		}

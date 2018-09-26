@@ -2,20 +2,22 @@
 
 import unittest
 from data.config import Config
-from app.awslambda import AwsLambda as App
+from app.lambdaapp import LambdaApp as App
 
-class TestAwsLambda(unittest.TestCase):
+class TestLambdaApp(unittest.TestCase):
 	def test_run(self):
-		config = Config('tests/fixtures/app/awslambda/config.yml')
-		App().run(config, {
+		config = Config('tests/unit/app/fixtures/lambdaapp/config.yml')
+		response = App().run(config, {
 			'url': '/test/App',
+			'method': 'GET',
 			'headers': {
-				'Authorization': 'auth_key'
+				'Authorization': 'auth_key',
 			},
 			'queries': {
-				'hoge': 'fuga'
+				'hoge': 'fuga',
 			},
 			'body': {
-				'fizz': 'buzz'
-			}
+				'fizz': 'buzz',
+			},
 		})
+		self.assertEqual({'success': True}, response)

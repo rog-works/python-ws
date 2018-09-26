@@ -3,35 +3,32 @@
 import os
 import re
 import yaml
-from errors.error import NotFoundError
+from error.errors import NotFoundError
 
 class Config(object):
+	"""コンフィグデータの読み込みと管理"""
+
 	def __init__(self, path: str):
-		"""インスタンスを生成"""
+		"""インスタンスを生成
+
+		:param str path: コンフィグファイルの相対パス
+		"""
 		self._config = self.__load(self.__config_path(path))
 
 	def __config_path(self, path: str) -> str:
 		"""設定ファイルの絶対パスを取得
 
-		Args:
-			path: 設定ファイルの相対パス
-
-		Returns:
-			設定ファイルの絶対パス
+		:param str path: 設定ファイルの相対パス
+		:return str: 設定ファイルの絶対パス
 		"""
 		return os.path.abspath(f'{os.getcwd()}/{path}')
 
 	def __load(self, path: str) -> dict:
 		"""設定ファイルをロード
 
-		Args:
-			path: 設定ファイルの絶対パス
-
-		Returns:
-			連想配列
-
-		Raises:
-			NotFoundError: 設定ファイルが存在しない
+		:param str path: 設定ファイルの絶対パス
+		:return str: 連想配列
+		:raise NotFoundError: 設定ファイルが存在しない
 		"""
 		if not os.path.exists(path):
 			raise NotFoundError(f'Not found configuretion file. path = "{path}"')
@@ -42,25 +39,19 @@ class Config(object):
 		return data
 
 	def get(self, route: str):
-		"""指定の参照パスに対応する設定値を取得
+		"""指定の参照パスに対応するデータを取得
 
-		Args:
-			route: 参照パス
-
-		Returns:
-			設定値
+		:param str route: 参照パス
+		:return any: データ
 		"""
 		return self.__pluck(self._config, route.split('.'))
 
-	def __pluck(self, root, routes: list) -> str:
-		"""指定の参照パスに対応する設定値を取得
+	def __pluck(self, root, routes: list):
+		"""指定の参照パスに対応するデータを取得
 
-		Args:
-			root: 参照ルート
-			routes: 参照キーリスト
-
-		Returns:
-			設定値
+		:param dict|list root: 参照ルート
+		:param list routes: 参照キーリスト
+		:return any: データ
 		"""
 		key = routes[0]
 		if type(root) is list:

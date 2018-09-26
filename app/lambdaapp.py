@@ -2,26 +2,24 @@
 
 from app.bootstrap import Bootstrap
 from data.config import Config
-from di.di import register
-from router.router import Router
+from routing.router import Router
 from net.request import Request, Builder
-from errors.error import Error
+from error.errors import Error
 
-class AwsLambda(object):
+class LambdaApp(object):
 	"""AWS Lambda用アプリケーション"""
 
 	def __build_request(self, event: dict) -> Request:
 		"""イベントデータからリクエストを生成
 
-		Args:
-			event: イベントデータ
-
-		Returns:
-			リクエスト
+		:param dict event: イベントデータ
+		:return Request: リクエスト
 		"""
 		builder = Builder()
 		if 'url' in event:
 			builder.url(event['url'])
+		if 'method' in event:
+			builder.method(event['method'])
 		if 'headers' in event:
 			builder.headers(event['headers'])
 		if 'queries' in event:
@@ -33,11 +31,10 @@ class AwsLambda(object):
 	def run(self, config: Config, event: dict) -> dict:
 		"""イベントデータから対応するハンドラーを呼び出し、レスポンスを返却
 
-		Args:
-			event: イベントデータ
-
-		Returns:
-			レスポンスの連想配列
+		:param Config config: コンフィグ
+		:param dict event: イベントデータ
+		:return dict: レスポンスの連想配列
+		:raise Error: Error系の例外発生時にメッセージを整形して再出力
 		"""
 		try:
 			request = self.__build_request(event)
@@ -47,4 +44,4 @@ class AwsLambda(object):
 			handler = receiver.instantiate(config, request)
 			return handler().to_dict()
 		except Error as e:
-			raise Exception(f'{e.code}: message = {e.message}')
+			raise Exception(f'[{e.code}] {e.__class__.__name__}: {e.message}')

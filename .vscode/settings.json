@@ -1,0 +1,13 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		"**/__pycache__/": true
+	},
+	"highlight.regexes": {
+		"filterFileRegex": ".*\\.py",
+		"regexFlags": "gm",
+		"(\"{3}[^\"]*\"{3})": [
+			{ "color": "#6a9955" }
+		]
+	}
+}
