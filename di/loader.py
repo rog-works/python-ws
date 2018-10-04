@@ -40,7 +40,7 @@ class Loader(object):
         @classmethof
         def __createResolver(cls, container: Container, deffinition: dict):
                 def resolve(value: str):
-                        return container.has(value) ? container.get(value) : value
+                        return container.get(value) if container.has(value) else value
 
                 def resolver(key: str):
                         value = deffinition[key]
